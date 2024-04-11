@@ -2,3 +2,5 @@
 api.key
 com.log
 prints
+zenodoExplorer.egg-info/
+zenodoExplorer/__pycache__/
