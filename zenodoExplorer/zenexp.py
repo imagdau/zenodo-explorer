@@ -1,8 +1,8 @@
 import os
-import time
 import requests
 import zipfile
 from tqdm import tqdm
+import yaml
 
 class ze:
 
@@ -32,9 +32,18 @@ class ze:
                 with zipfile.ZipFile(temp_dest, 'r') as zip_ref:
                     zip_ref.extractall(final_dest)
                     os.remove(temp_dest)
+        return final_dest
 
     def cache_all_data(self):
         for recID in self.urls:
             print(recID)
             for url_key in tqdm(self.urls[recID]):
                 self.get_chunk(recID, url_key)
+                
+    # def master_yaml(self):
+    #     for recID in self.urls:
+    #         final_dest = self.get_chunk(recID, 'data.yml')
+    #         print(final_dest)
+    #         with open(final_dest, 'r') as file:
+    #             data = yaml.safe_load(file)
+    #             print(data)
