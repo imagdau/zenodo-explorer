@@ -1,36 +1,35 @@
 TrainData:
-  - &td1
-    at_conf_name: IBM23
-    at_conf_desc: EC:EMC liquid PBC
+  - tag: td1
+    at_conf: ac1@10835267
     ab_init_code: CASTEP (ASE+LAMMPS)
     ab_init_theo: PBE-D2 (-fixed charge baseline)
     zip: TrainData_IBM23
     file: IBM23_PBED2_Castep-LR.xyz
 
-MLIP:
-  - &ml1
-    train_data: *td1@10835267
+MLIPs:
+  - tag: ml1
+    tr_data: td1@10835267
     ml_code: GAP
     ml_settings: DTS, Rcut 3/6 (seeds 1,2,3)
     fit_prop: energy, forces, virial
     zip: MLIP_GAP36_IBM23
     file: 'gapmodel_no*.xml'
-  - &ml2
-    train_data: *td1
+  - tag: ml2
+    tr_data: td1
     ml_code: GAP
     ml_settings: DTS, Rcut 3/6
     fit_prop: energy, forces, virial
     zip: MLIP_GAP36_IBM23-LR
     file: gapmodel.xml
-  - &ml3
-    train_data: *td1@10835267
+  - tag: ml3
+    tr_data: td1@10835267
     ml_code: MACE
     ml_settings: Layers 2, Rcut 4+4
     fit_prop: energy, forces, virial
     zip: MLIP_MACE44_IBM23
     file: macemodel.model
-  - &ml4
-    train_data: *td1@10835267
+  - tag: ml4
+    tr_data: td1@10835267
     ml_code: MACE
     ml_settings: Layers 2, Rcut 6+6
     fit_prop: energy, forces, virial
@@ -38,8 +37,8 @@ MLIP:
     file: macemodel.model
 
 MDSims:
-  - &md1
-    potential: *ml2@10835267
+  - tag: md1
+    pes_model: ml2@10835267
     md_code: LAMMPS
     md_system: 33% EC:EMC (seeds 1,2,3)
     md_no_at: 640
@@ -50,8 +49,8 @@ MDSims:
     md_pres: 1 atm
     zip: MDSims_GAP36_SR_Lmp
     file: NPT/npt0[0-5].thermo, NPT/npt0[0-5].lammpstrj, NVT/nvt0[0-5].thermo, NVT/nvt0[0-5].lammpstrj
-  - &md2
-    potential: *ml1
+  - tag: md2
+    pes_model: ml1
     md_code: LAMMPS
     md_system: 33% EC:EMC
     md_no_at: 640
@@ -62,8 +61,8 @@ MDSims:
     md_pres: 1 atm
     zip: MDSims_GAP36_SR_Lmp
     file: NPT/npt03_no[0-3].thermo, NPT/npt03_no[0-3].lammpstrj, NVT/nvt03_no[0-3].thermo, NVT/nvt03_no[0-3].lammpstrj
-  - &md3
-    potential: *ml2
+  - tag: md3
+    pes_model: ml2
     md_code: LAMMPS
     md_system: 33% EC:EMC (seeds 1,2,3)
     md_no_at: 640
@@ -74,8 +73,8 @@ MDSims:
     md_pres: 1 atm
     zip: MDSims_GAP36_LR_Lmp
     file: NPT/npt0[0-5].thermo, NPT/npt0[0-5].lammpstrj, NVT/nvt0[0-5].thermo, NVT/nvt0[0-5].lammpstrj
-  - &md4
-    potential: *ml4
+  - tag: md4
+    pes_model: ml4
     md_code: LAMMPS
     md_system: 33% EC:EMC
     md_no_at: 640
@@ -86,8 +85,8 @@ MDSims:
     md_pres: 1 atm
     zip: MDSims_MACE66_SR_Lmp
     file: NPT/npt03.thermo, NPT/npt03.lammpstrj, NVT/nvt03.thermo, NVT/nvt03.lammpstrj
-  - &md5
-    potential: *ml3
+  - tag: md5
+    pes_model: ml3
     md_code: LAMMPS
     md_system: 33% EC:EMC
     md_no_at: 640
@@ -98,8 +97,8 @@ MDSims:
     md_pres: 1 atm
     zip: MDSims_MACE44_SR_Lmp
     file: NPT/npt03.thermo, NPT/npt03.lammpstrj, NVT/nvt03.thermo, NVT/nvt03.lammpstrj
-  - &md6
-    potential: *ml3
+  - tag: md6
+    pes_model: ml3
     md_code: ASE
     md_system: 33% EC:EMC (seeds 1,2,3)
     md_no_at: 640

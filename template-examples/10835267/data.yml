@@ -1,43 +1,46 @@
+AtomicConfigs:
+  - tag: ac1
+    name: IBM23
+    desc: EC:EMC liquid PBC, isolated mols, volume scans, all compositions, Gen16
+    
 TrainData:
-  - &td1
-    at_conf_name: IBM23
-    at_conf_desc: EC:EMC liquid PBC
+  - tag: td1
+    at_conf: ac1
     ab_init_code: CASTEP
     ab_init_theo: PBE-D2
     zip: TrainData
     file: Train16_PBED2.xyz
-  - &td2
-    at_conf_name: IBM23
-    at_conf_desc: EC:EMC liquid PBC
+  - tag: td2
+    at_conf: ac1
     ab_init_code: CP2K
     ab_init_theo: PBE-D3
     zip: TrainData
     file: Train16_PBED3.xyz
 
-MLIP:
-  - &ml1
-    train_data: *td1
+MLIPs:
+  - tag: ml1
+    tr_data: td1
     ml_code: GAP
     ml_settings: DS, Rcut 3/6
     fit_prop: energy, forces, virial
     zip: MLIP_GAP_Gen16DS_PBED2
     file: gapmodel.xml
-  - &ml2
-    train_data: *td1
+  - tag: ml2
+    tr_data: td1
     ml_code: GAP
     ml_settings: DTS, Rcut 3/6
     fit_prop: energy, forces, virial
     zip: MLIP_GAP_Gen16DTS_PBED2
     file: gapmodel.xml
-  - &ml3
-    train_data: *td2
+  - tag: ml3
+    tr_data: td2
     ml_code: GAP
     ml_settings: DS, Rcut 3/6
     fit_prop: energy, forces, virial
     zip: MLIP_GAP_Gen16DS_PBED3
     file: gapmodel.xml
-  - &ml4
-    train_data: *td2
+  - tag: ml4
+    tr_data: td2
     ml_code: GAP
     ml_settings: DTS, Rcut 3/6
     fit_prop: energy, forces, virial
@@ -45,8 +48,8 @@ MLIP:
     file: gapmodel.xml
 
 MDSims:
-  - &md1
-    potential: *ml4
+  - tag: md1
+    pes_model: ml4
     md_code: LAMMPS
     md_system: 0%, 33%, 67%, 100% EC:EMC
     md_no_at: 1000
@@ -57,8 +60,8 @@ MDSims:
     md_pres: 1 atm
     zip: MDSims_1000Atoms_1000ps_300K_NPT_Gen16DTS_PBED3
     file: \*.thermo, \*.lammpstrj
-  - &md2
-    potential: *ml4
+  - tag: md2
+    pes_model: ml4
     md_code: LAMMPS
     md_system: 0%, 33%, 67%, 100% EC:EMC
     md_no_at: 1000

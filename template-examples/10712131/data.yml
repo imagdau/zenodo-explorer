@@ -1,57 +1,61 @@
+AtomicConfigs:
+  - tag: ac1
+    name: SD22NQ
+    desc: EC:VC:PC:EMC:DMC:DEC mol clusters, 25% of all neutral, spin 0
+  - tag: ac2
+    name: SD22NQQ
+    desc: EC:VC:PC:EMC:DMC:DEC mol clusters, 7% of all neutral, spin 0
+
 TrainData:
-  - &td1
-    at_conf_name: IBM23
-    at_conf_desc: EC:EMC liquid PBC, isolated mols, volume scans, all compositions, Gen16
+  - tag: td1
+    at_conf: ac1@10835267
     ab_init_code: VASP
     ab_init_theo: B97-D3BJ
     zip: TrainData_IBM23
     file: IBM23_B97D3BJ_Vasp.xyz
-  - &td2
-    at_conf_name: SD22NQ
-    at_conf_desc: EC:VC:PC:EMC:DMC:DEC mol clusters, 25% of all neutral, spin 0
+  - tag: td2
+    at_conf: ac1
     ab_init_code: PSI4
     ab_init_theo: B97-D3BJ
     zip: TrainData_SD22
     file: SD22NQ_B97D3BJ_Psi4.xyz
-  - &td3
-    at_conf_name: SD22NQ
-    at_conf_desc: EC:VC:PC:EMC:DMC:DEC mol clusters, 25% of all neutral, spin 0
+  - tag: td3
+    at_conf: ac1
     ab_init_code: PSI4
     ab_init_theo: wB97X-D3BJ
     zip: TrainData_SD22
     file: SD22NQ_wB97XD3BJ_Psi4.xyz
-  - &td4
-    at_conf_name: SD22NQQ
-    at_conf_desc: EC:VC:PC:EMC:DMC:DEC mol clusters, 7% of all neutral, spin 0
+  - tag: td4
+    at_conf: ac2
     ab_init_code: PSI4
     ab_init_theo: wB97X-D3BJ
     zip: TrainData_SD22
     file: SD22NQQ_wB97XD3BJ_Psi4.xyz
 
-MLIP:
-  - &ml1
-    train_data: *td1
+MLIPs:
+  - tag: ml1
+    tr_data: td1
     ml_code: MACE
     ml_settings: Layers 2, Rcut 6+6
     fit_prop: energy, forces
     zip: MLIP_MACE_IBM23_B97
     file: macemodel.model
-  - &ml2
-    train_data: *td2
+  - tag: ml2
+    tr_data: td2
     ml_code: MACE
     ml_settings: Layers 2, Rcut 6+6
     fit_prop: energy, forces
     zip: MLIP_MACE_SD22NQ_B97
     file: macemodel.model
-  - &ml3
-    train_data: *td3
+  - tag: ml3
+    tr_data: td3
     ml_code: MACE
     ml_settings: Layers 2, Rcut 6+6
     fit_prop: energy, forces
     zip: MLIP_MACE_SD22NQ_wB97X
     file: macemodel.model
-  - &ml4
-    train_data: *td4
+  - tag: ml4
+    tr_data: td4
     ml_code: MACE
     ml_settings: Layers 2, Rcut 6+6
     fit_prop: energy, forces
@@ -59,8 +63,8 @@ MLIP:
     file: macemodel.model
 
 MDSims:
-  - &md1
-    potential: *ml3
+  - tag: md1
+    pes_model: ml3
     md_code: ASE
     md_system: EMC
     md_no_at: 1000
@@ -71,8 +75,8 @@ MDSims:
     md_pres: 1 atm
     zip: MDSims_1000Atoms_05fs_MACE_SD22NQ_wB97X
     file: test-1fs/npt_000conEC_298K.thermo, test-1fs/npt_000conEC_298K.xyz
-  - &md2
-    potential: *ml3
+  - tag: md2
+    pes_model: ml3
     md_code: ASE
     md_system: 0%, 33%, 67%, 100% EC:EMC
     md_no_at: 1000
@@ -83,8 +87,8 @@ MDSims:
     md_pres: 1 atm
     zip: MDSims_1000Atoms_05fs_MACE_SD22NQ_wB97X
     file: npt_*.thermo, npt_*.xyz
-  - &md3
-    potential: *ml4
+  - tag: md3
+    pes_model: ml4
     md_code: ASE
     md_system: 0%, 33%, 67%, 100% EC:EMC
     md_no_at: 1000
@@ -95,8 +99,8 @@ MDSims:
     md_pres: 1 atm
     zip: MDSims_1000Atoms_1fs_MACE_SD22NQQ_wB97X
     file: npt_*.thermo, npt_*.xyz
-  - &md4
-    potential: *ml1
+  - tag: md4
+    pes_model: ml1
     md_code: ASE
     md_system: 0%, 33%, 67%, 100% EC:EMC
     md_no_at: 1000
@@ -107,8 +111,8 @@ MDSims:
     md_pres: 1 atm
     zip: MDSims_1000Atoms_1fs_MACE_IBM23_B97
     file: npt_*.thermo, npt_*.xyz
-  - &md5
-    potential: *ml2
+  - tag: md5
+    pes_model: ml2
     md_code: ASE
     md_system: 0%, 33%, 67%, 100% EC:EMC
     md_no_at: 1000
