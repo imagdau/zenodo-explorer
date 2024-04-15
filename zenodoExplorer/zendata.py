@@ -1,8 +1,9 @@
 import pandas as pd
+import plotly.graph_objects as go
 
 class dat:
 
-    def __init__(self, data_dict):
+    def __init__(self, data_dict, count):
         self.__dict__.update(data_dict)
         if self.tag[:2] == 'ac':
             self.source = None #Atomic Configs have no source
@@ -12,6 +13,7 @@ class dat:
             self.source = data_dict['tr_data']
         elif self.tag[:2] == 'md':
             self.source = data_dict['pes_model']
+        self.uid = count
 
 class zdb:
     
@@ -20,23 +22,26 @@ class zdb:
         self.TrainData = []
         self.MLIPs = []
         self.MDSims = []
+        self.count = 0
     
     def update(self, zdb_dict, recID):
         for k in self.__dict__:
             if k in zdb_dict:
                 update_tags(zdb_dict[k], recID)
                 for data_dict in zdb_dict[k]:
-                    self.__dict__[k].append(dat(data_dict))
+                    self.__dict__[k].append(dat(data_dict, self.count))
+                    self.count += 1
     
-    def to_pd(self, tag):
+    def to_pd(self, field):
         tab = []
-        for t in self.__dict__[tag]:
+        for t in self.__dict__[field]:
             tab.append(t.__dict__)
         df = pd.DataFrame(tab)
-        if tag != 'AtomicConfigs':
+        if field != 'AtomicConfigs':
             df = df.drop('zip', axis=1)
             df = df.drop('file', axis=1)
         df = df.drop('source', axis=1)
+        df = df.drop('uid', axis=1)
         df = df.set_index('tag')
         return df
 
