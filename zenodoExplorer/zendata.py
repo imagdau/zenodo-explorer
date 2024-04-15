@@ -49,10 +49,15 @@ class zdb:
         df = df.set_index('tag')
         return df
     
-    # def plot(self):
-    #     for k in ['AtomicConfigs', 'TrainData', 'MLIPs', 'MDSims']:
-    #         for dat in self.__dict__[k]:
-    #             print(dat.uid)
+    def plot(self):
+        d = {'source': [], 'target': [], 'value': []}
+        for k in ['TrainData', 'MLIPs', 'MDSims']:
+            for dat in self.__dict__[k]:
+                d['source'].append(self.tag2uid[dat.source])
+                d['target'].append(dat.uid)
+                d['value'].append(1)
+        fig = go.Figure(go.Sankey(node=dict(label=[t[1] for t in self.uid2tag.values()]), link=d))
+        return fig
 
 def update_tag(tag, recID):
     if '@' not in tag:
