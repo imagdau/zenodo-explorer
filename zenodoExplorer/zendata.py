@@ -33,6 +33,9 @@ class zdb:
         for t in self.__dict__[tag]:
             tab.append(t.__dict__)
         df = pd.DataFrame(tab)
+        if tag != 'AtomicConfigs':
+            df = df.drop('zip', axis=1)
+            df = df.drop('file', axis=1)
         df = df.drop('source', axis=1)
         df = df.set_index('tag')
         return df
