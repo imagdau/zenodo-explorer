@@ -3,6 +3,7 @@ import requests
 import zipfile
 from tqdm import tqdm
 import yaml
+from .zendata import zdb
 
 class ze:
 
@@ -10,6 +11,7 @@ class ze:
         self.ACCESS_TOKEN = ACCESS_TOKEN
         self.recIDs = recIDs
         self.urls = dict()
+        self.zdb = zdb()
         for recID in self.recIDs:
             self.urls[recID] = dict()
             r = requests.get('https://zenodo.org/api/deposit/depositions/'+str(recID), params={'access_token': self.ACCESS_TOKEN})
@@ -40,9 +42,10 @@ class ze:
             for url_key in tqdm(self.urls[recID]):
                 self.get_chunk(recID, url_key)
                 
-    def master_yaml(self):
+    def read_zdb(self):
         for recID in self.urls:
             final_dest = self.get_chunk(recID, 'data.yml')
             with open(final_dest, 'r') as file:
-                data = yaml.safe_load(file)
-                print(data)
+                zdb_dict = yaml.safe_load(file)
+                self.zdb.update(zdb_dict, recID)
+
