@@ -23,13 +23,17 @@ class zdb:
         self.MLIPs = []
         self.MDSims = []
         self.count = 0
+        self.tag2uid = {}
+        self.uid2tag = {}
     
     def update(self, zdb_dict, recID):
-        for k in self.__dict__:
+        for k in ['AtomicConfigs', 'TrainData', 'MLIPs', 'MDSims']:
             if k in zdb_dict:
                 update_tags(zdb_dict[k], recID)
                 for data_dict in zdb_dict[k]:
                     self.__dict__[k].append(dat(data_dict, self.count))
+                    self.tag2uid.update({data_dict['tag'] : self.count})
+                    self.uid2tag.update({self.count : data_dict['tag']})
                     self.count += 1
     
     def to_pd(self, field):
