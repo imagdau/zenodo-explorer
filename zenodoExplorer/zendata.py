@@ -14,18 +14,10 @@ class zdb:
         self.MDSims = []
     
     def update(self, zdb_dict, recID):
-        if 'AtomicConfigs' in zdb_dict:
-            update_tags(zdb_dict['AtomicConfigs'], recID)
-            self.AtomicConfigs += zdb_dict['AtomicConfigs']
-        if 'TrainData' in zdb_dict:
-            update_tags(zdb_dict['TrainData'], recID)
-            self.TrainData += zdb_dict['TrainData']
-        if 'MLIPs' in zdb_dict:
-            update_tags(zdb_dict['MLIPs'], recID)
-            self.MLIPs += zdb_dict['MLIPs']
-        if 'MDSims' in zdb_dict:
-            update_tags(zdb_dict['MDSims'], recID)
-            self.MDSims += zdb_dict['MDSims']
+        for k in ['AtomicConfigs', 'TrainData', 'MLIPs', 'MDSims']:
+            if k in zdb_dict:
+                update_tags(zdb_dict[k], recID)
+                self.AtomicConfigs += zdb_dict[k]
     
 def update_tag(tag, recID):
     if '@' not in tag:
