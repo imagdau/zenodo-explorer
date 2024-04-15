@@ -1,9 +1,18 @@
 import pandas as pd
 
 class dat:
- 
+
     def __init__(self, data_dict):
         self.__dict__.update(data_dict)
+        self.id = data_dict['tag']
+        if self.id[:2] == 'ac':
+            self.source = None #Atomic Configs have no source
+        elif self.id[:2] == 'td':
+            self.source = data_dict['at_conf']
+        elif self.id[:2] == 'ml':
+            self.source = data_dict['tr_data']
+        elif self.id[:2] == 'md':
+            self.source = data_dict['pes_model']
 
 class zdb:
     
