@@ -17,7 +17,8 @@ class zdb:
         for k in ['AtomicConfigs', 'TrainData', 'MLIPs', 'MDSims']:
             if k in zdb_dict:
                 update_tags(zdb_dict[k], recID)
-                self.AtomicConfigs += zdb_dict[k]
+                for data_dict in zdb_dict[k]:
+                    self.__dict__[k].append(dat(data_dict))
     
 def update_tag(tag, recID):
     if '@' not in tag:
