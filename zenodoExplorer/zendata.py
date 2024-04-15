@@ -14,12 +14,20 @@ class zdb:
         self.MDSims = []
     
     def update(self, zdb_dict, recID):
-        for k in ['AtomicConfigs', 'TrainData', 'MLIPs', 'MDSims']:
+        for k in self.__dict__:
             if k in zdb_dict:
                 update_tags(zdb_dict[k], recID)
                 for data_dict in zdb_dict[k]:
                     self.__dict__[k].append(dat(data_dict))
     
+    def to_pd(self, tag):
+        tab = []
+        for t in self.__dict__[tag]:
+            tab.append(t.__dict__)
+        df = pd.DataFrame(tab)
+        df = df.set_index('tag')
+        return df
+
 def update_tag(tag, recID):
     if '@' not in tag:
         return tag+'@'+str(recID)
