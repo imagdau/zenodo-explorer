@@ -40,10 +40,9 @@ class ze:
             for url_key in tqdm(self.urls[recID]):
                 self.get_chunk(recID, url_key)
                 
-    # def master_yaml(self):
-    #     for recID in self.urls:
-    #         final_dest = self.get_chunk(recID, 'data.yml')
-    #         print(final_dest)
-    #         with open(final_dest, 'r') as file:
-    #             data = yaml.safe_load(file)
-    #             print(data)
+    def master_yaml(self):
+        for recID in self.urls:
+            final_dest = self.get_chunk(recID, 'data.yml')
+            with open(final_dest, 'r') as file:
+                data = yaml.safe_load(file)
+                print(data)
