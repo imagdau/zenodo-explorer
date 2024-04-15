@@ -33,7 +33,7 @@ class zdb:
                 for data_dict in zdb_dict[k]:
                     self.__dict__[k].append(dat(data_dict, self.count))
                     self.tag2uid.update({data_dict['tag'] : self.count})
-                    self.uid2tag.update({self.count : data_dict['tag']})
+                    self.uid2tag.update({self.count : (k, data_dict['tag'])})
                     self.count += 1
     
     def to_pd(self, field):
@@ -48,6 +48,11 @@ class zdb:
         df = df.drop('uid', axis=1)
         df = df.set_index('tag')
         return df
+    
+    # def plot(self):
+    #     for k in ['AtomicConfigs', 'TrainData', 'MLIPs', 'MDSims']:
+    #         for dat in self.__dict__[k]:
+    #             print(dat.uid)
 
 def update_tag(tag, recID):
     if '@' not in tag:
