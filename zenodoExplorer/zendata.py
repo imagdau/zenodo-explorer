@@ -1,6 +1,13 @@
 import pandas as pd
 import plotly.graph_objects as go
 
+abr = {
+    'ac' : 'AtomicConfigs',
+    'td' : 'TrainData',
+    'ml' : 'MLIPs',
+    'md' : 'MDSims'
+}
+
 class dat:
 
     def __init__(self, data_dict):
@@ -16,6 +23,9 @@ class dat:
         elif self.tag[:2] == 'md':
             self.name = self.md_system+'/'+self.md_ensmb+'/'+self.md_temp
             self.source = data_dict['pes_model']
+    
+    def get_recID(self):
+        return self.tag.split('@')[1]
 
 class zdb:
     
@@ -45,6 +55,12 @@ class zdb:
         df = df.set_index('tag')
         return df
     
+    def get_dat(self, tag):
+        key = abr[tag[:2]]
+        for dat in self.__dict__[key]:
+            if dat.tag == tag:
+                return dat
+
     def plot(self):
         tag2uid = dict()
         uid2tag = dict()

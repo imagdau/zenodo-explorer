@@ -3,6 +3,7 @@ import requests
 import zipfile
 from tqdm import tqdm
 import yaml
+import glob
 from .zendata import zdb
 
 class ze:
@@ -49,3 +50,14 @@ class ze:
                 zdb_dict = yaml.safe_load(file)
                 self.zdb.update(zdb_dict, recID)
 
+    def read_dat_files(self, tag):
+        dat = self.zdb.get_dat(tag)
+        recID = int(dat.get_recID())
+        fname = dat.zip+'.zip'
+        final_dest = self.get_chunk(recID, fname)
+        pattern = dat.file.split(',')
+        flist = []
+        for p in pattern:
+            for l in glob.glob(final_dest+'/'+p.strip()):
+                flist.append(l)
+        return flist
