@@ -1,6 +1,7 @@
 .cache
 api.key
 com.log
+sankey_diagram.html
 prints
 docs
 zenodoExplorer.egg-info/
