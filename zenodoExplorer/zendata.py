@@ -8,10 +8,13 @@ class dat:
         if self.tag[:2] == 'ac':
             self.source = None #Atomic Configs have no source
         elif self.tag[:2] == 'td':
+            self.name = self.ab_init_code+'/'+self.ab_init_theo
             self.source = data_dict['at_conf']
         elif self.tag[:2] == 'ml':
+            self.name = self.ml_code+'/'+self.ml_settings
             self.source = data_dict['tr_data']
         elif self.tag[:2] == 'md':
+            self.name = self.md_code+'/'+self.md_ensmb+'/'+self.md_temp
             self.source = data_dict['pes_model']
 
 class zdb:
@@ -37,6 +40,7 @@ class zdb:
         if field != 'AtomicConfigs':
             df = df.drop('zip', axis=1)
             df = df.drop('file', axis=1)
+        df = df.drop('name', axis=1)
         df = df.drop('source', axis=1)
         df = df.set_index('tag')
         return df
@@ -61,8 +65,8 @@ class zdb:
             # color = []
         )
         
-        def node_update(dat, name, count, x, y):
-            node['label'].append(name)
+        def node_update(dat, count, x, y):
+            node['label'].append(dat.name)
             node['x'].append(x)
             node['y'].append(y)
             uid2tag[count] = dat.tag
@@ -85,22 +89,22 @@ class zdb:
         dy = 0.8/len(self.AtomicConfigs)
 
         for i, dat in enumerate(self.AtomicConfigs):
-            count = node_update(dat, dat.name, count, 0.1, 0.01+dy*i)
+            count = node_update(dat, count, 0.1, 0.01+dy*i)
         
         dy = 0.8/len(self.TrainData)
         for i, dat in enumerate(self.TrainData):
             link_update(dat, count)
-            count = node_update(dat, dat.ab_init_code+'/'+dat.ab_init_theo, count, 0.2, 0.1+dy*i)
+            count = node_update(dat, count, 0.2, 0.1+dy*i)
         
         dy = 0.8/len(self.MLIPs)
         for i, dat in enumerate(self.MLIPs):
             link_update(dat, count)
-            count = node_update(dat, dat.ml_code+'/'+dat.ml_settings, count, 0.4, 0.1+dy*i)
+            count = node_update(dat, count, 0.4, 0.1+dy*i)
         
         dy = 0.8/len(self.MDSims)
         for i, dat in enumerate(self.MDSims):
             link_update(dat, count)
-            count = node_update(dat, dat.md_code+'/'+dat.md_ensmb+'/'+dat.md_temp, count, 0.99, 0.1+dy*i)
+            count = node_update(dat, count, 0.99, 0.1+dy*i)
         
         link_sort(link, key='source')
         fig = go.Figure(go.Sankey(node=node, link=link, arrangement='snap'))
