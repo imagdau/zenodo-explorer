@@ -50,13 +50,30 @@ class zdb:
         return df
     
     def plot(self):
-        d = {'source': [], 'target': [], 'value': []}
-        for k in ['TrainData', 'MLIPs', 'MDSims']:
-            for dat in self.__dict__[k]:
-                d['source'].append(self.tag2uid[dat.source])
-                d['target'].append(dat.uid)
-                d['value'].append(1)
-        fig = go.Figure(go.Sankey(node=dict(label=[t[1] for t in self.uid2tag.values()]), link=d))
+        node = dict(
+            pad = 15,
+            thickness = 15,
+            line = dict(color = "black", width = 0.5),
+            label =  [t[1] for t in self.uid2tag.values()],
+            # color =  []
+        )
+        link = dict(
+            source = [],
+            target = [],
+            value = [],
+            label = [],
+            # color = []
+        )
+        for dat in self.TrainData:
+            link['source'].append(self.tag2uid[dat.source])
+            link['target'].append(dat.uid)
+            link['value'].append(1)
+        # for k in ['MLIPs', 'MDSims']:
+        #     for dat in self.__dict__[k]:
+        #         link['source'].append(self.tag2uid[dat.source])
+        #         link['target'].append(dat.uid)
+        #         link['value'].append(1)
+        fig = go.Figure(go.Sankey(node=node, link=link))
         return fig
 
 def update_tag(tag, recID):
