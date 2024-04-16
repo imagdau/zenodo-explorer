@@ -55,14 +55,11 @@ class zdb:
             label =  [],
             x = [],
             y = [],
-            # color =  []
         )
         link = dict(
             source = [],
             target = [],
-            value = [],
-            label = [],
-            # color = []
+            value = []
         )
         
         def node_update(dat, count, x, y):
@@ -79,17 +76,15 @@ class zdb:
             link['target'].append(count)
             link['value'].append(1)
             
-        def link_sort(link, key):
-            sort_idx = sorted(range(len(link[key])), key=link[key].__getitem__) #stackoverflow.com/questions/3382352
-            for k in link:
-                if len(link[k]) > 0:
-                    link[k] = [link[k][i] for i in sort_idx]
+        def link_sort(link):
+            buf = sorted(zip(link['source'], link['target']), key=lambda x: (x[0], x[1])) #Gemini: alphabetical sort
+            link['source'], link['target'] = zip(*buf)
         
         count = 0
         dy = 0.8/len(self.AtomicConfigs)
 
         for i, dat in enumerate(self.AtomicConfigs):
-            count = node_update(dat, count, 0.1, 0.01+dy*i)
+            count = node_update(dat, count, 0.1, 0.1+dy*i)
         
         dy = 0.8/len(self.TrainData)
         for i, dat in enumerate(self.TrainData):
@@ -106,8 +101,9 @@ class zdb:
             link_update(dat, count)
             count = node_update(dat, count, 0.99, 0.1+dy*i)
         
-        link_sort(link, key='source')
+        link_sort(link)
         fig = go.Figure(go.Sankey(node=node, link=link, arrangement='snap'))
+        
         return fig
 
 def update_tag(tag, recID):
