@@ -25,15 +25,19 @@ class zdb:
         self.count = 0
         self.tag2uid = {}
         self.uid2tag = {}
+        self.x = []
+        self.y = []
     
     def update(self, zdb_dict, recID):
-        for k in ['AtomicConfigs', 'TrainData', 'MLIPs', 'MDSims']:
+        for i, k in enumerate(['AtomicConfigs', 'TrainData', 'MLIPs', 'MDSims']):
             if k in zdb_dict:
                 update_tags(zdb_dict[k], recID)
                 for data_dict in zdb_dict[k]:
                     self.__dict__[k].append(dat(data_dict, self.count))
                     self.tag2uid.update({data_dict['tag'] : self.count})
                     self.uid2tag.update({self.count : (k, data_dict['tag'])})
+                    self.x.append(i/3.0*0.8+0.1)
+                    self.y.append(0.1)
                     self.count += 1
     
     def to_pd(self, field):
@@ -55,6 +59,8 @@ class zdb:
             thickness = 15,
             line = dict(color = "black", width = 0.5),
             label =  [t[1] for t in self.uid2tag.values()],
+            x = self.x,
+            y = self.y
             # color =  []
         )
         link = dict(
@@ -68,12 +74,15 @@ class zdb:
             link['source'].append(self.tag2uid[dat.source])
             link['target'].append(dat.uid)
             link['value'].append(1)
-        # for k in ['MLIPs', 'MDSims']:
-        #     for dat in self.__dict__[k]:
-        #         link['source'].append(self.tag2uid[dat.source])
-        #         link['target'].append(dat.uid)
-        #         link['value'].append(1)
-        fig = go.Figure(go.Sankey(node=node, link=link))
+        for dat in self.MLIPs:
+            link['source'].append(self.tag2uid[dat.source])
+            link['target'].append(dat.uid)
+            link['value'].append(1)
+        for dat in self.MDSims:
+            link['source'].append(self.tag2uid[dat.source])
+            link['target'].append(dat.uid)
+            link['value'].append(1)            
+        fig = go.Figure(go.Sankey(node=node, link=link, arrangement='snap'))
         return fig
 
 def update_tag(tag, recID):
