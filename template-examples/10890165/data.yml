@@ -48,7 +48,7 @@ MDSims:
     md_temp: 500 K
     md_pres: 1 atm
     zip: MDSims_GAP36_SR_Lmp
-    file: NPT/npt0[0-5].thermo, NPT/npt0[0-5].lammpstrj, NVT/nvt0[0-5].thermo, NVT/nvt0[0-5].lammpstrj
+    file: 'NPT/npt0[0-5].thermo, NPT/npt0[0-5].lammpstrj, NVT/nvt0[0-5].thermo, NVT/nvt0[0-5].lammpstrj'
   - tag: md2
     pes_model: ml1
     md_code: LAMMPS
@@ -60,7 +60,7 @@ MDSims:
     md_temp: 500 K
     md_pres: 1 atm
     zip: MDSims_GAP36_SR_Lmp
-    file: NPT/npt03_no[0-3].thermo, NPT/npt03_no[0-3].lammpstrj, NVT/nvt03_no[0-3].thermo, NVT/nvt03_no[0-3].lammpstrj
+    file: 'NPT/npt03_no[0-3].thermo, NPT/npt03_no[0-3].lammpstrj, NVT/nvt03_no[0-3].thermo, NVT/nvt03_no[0-3].lammpstrj'
   - tag: md3
     pes_model: ml2
     md_code: LAMMPS
@@ -72,7 +72,7 @@ MDSims:
     md_temp: 500 K
     md_pres: 1 atm
     zip: MDSims_GAP36_LR_Lmp
-    file: NPT/npt0[0-5].thermo, NPT/npt0[0-5].lammpstrj, NVT/nvt0[0-5].thermo, NVT/nvt0[0-5].lammpstrj
+    file: 'NPT/npt0[0-5].thermo, NPT/npt0[0-5].lammpstrj, NVT/nvt0[0-5].thermo, NVT/nvt0[0-5].lammpstrj'
   - tag: md4
     pes_model: ml4
     md_code: LAMMPS
@@ -84,7 +84,7 @@ MDSims:
     md_temp: 500 K
     md_pres: 1 atm
     zip: MDSims_MACE66_SR_Lmp
-    file: NPT/npt03.thermo, NPT/npt03.lammpstrj, NVT/nvt03.thermo, NVT/nvt03.lammpstrj
+    file: 'NPT/npt03.thermo, NPT/npt03.lammpstrj, NVT/nvt03.thermo, NVT/nvt03.lammpstrj'
   - tag: md5
     pes_model: ml3
     md_code: LAMMPS
@@ -96,7 +96,7 @@ MDSims:
     md_temp: 500 K
     md_pres: 1 atm
     zip: MDSims_MACE44_SR_Lmp
-    file: NPT/npt03.thermo, NPT/npt03.lammpstrj, NVT/nvt03.thermo, NVT/nvt03.lammpstrj
+    file: 'NPT/npt03.thermo, NPT/npt03.lammpstrj, NVT/nvt03.thermo, NVT/nvt03.lammpstrj'
   - tag: md6
     pes_model: ml3
     md_code: ASE
@@ -108,4 +108,4 @@ MDSims:
     md_temp: 500 K
     md_pres: 1 atm
     zip: MDSims_GAP36_LR_Ase
-    file: NPT/npt0[0-5].thermo, NPT/npt0[0-5].xyz, NVT/nvt0[0-5].thermo, NVT/nvt0[0-5].xyz
+    file: 'NPT/npt0[0-5].thermo, NPT/npt0[0-5].xyz, NVT/nvt0[0-5].thermo, NVT/nvt0[0-5].xyz'

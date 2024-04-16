@@ -74,7 +74,7 @@ MDSims:
     md_temp: 298 K
     md_pres: 1 atm
     zip: MDSims_1000Atoms_05fs_MACE_SD22NQ_wB97X
-    file: test-1fs/npt_000conEC_298K.thermo, test-1fs/npt_000conEC_298K.xyz
+    file: 'test-1fs/npt_000conEC_298K.thermo, test-1fs/npt_000conEC_298K.xyz'
   - tag: md2
     pes_model: ml3
     md_code: ASE
@@ -86,7 +86,7 @@ MDSims:
     md_temp: 298, 298, 298, 313 K
     md_pres: 1 atm
     zip: MDSims_1000Atoms_05fs_MACE_SD22NQ_wB97X
-    file: npt_*.thermo, npt_*.xyz
+    file: 'npt_*.thermo, npt_*.xyz'
   - tag: md3
     pes_model: ml4
     md_code: ASE
@@ -98,7 +98,7 @@ MDSims:
     md_temp: 298, 298, 298, 313 K
     md_pres: 1 atm
     zip: MDSims_1000Atoms_1fs_MACE_SD22NQQ_wB97X
-    file: npt_*.thermo, npt_*.xyz
+    file: 'npt_*.thermo, npt_*.xyz'
   - tag: md4
     pes_model: ml1
     md_code: ASE
@@ -110,7 +110,7 @@ MDSims:
     md_temp: 298, 298, 298, 313 K
     md_pres: 1 atm
     zip: MDSims_1000Atoms_1fs_MACE_IBM23_B97
-    file: npt_*.thermo, npt_*.xyz
+    file: 'npt_*.thermo, npt_*.xyz'
   - tag: md5
     pes_model: ml2
     md_code: ASE
@@ -122,4 +122,4 @@ MDSims:
     md_temp: 298, 298, 298, 313 K
     md_pres: 1 atm
     zip: MDSims_1000Atoms_1fs_MACE_SD22NQ_B97
-    file: npt_*.thermo, npt_*.xyz
+    file: 'npt_*.thermo, npt_*.xyz'

@@ -59,7 +59,7 @@ MDSims:
     md_temp: 300 K
     md_pres: 1 atm
     zip: MDSims_1000Atoms_1000ps_300K_NPT_Gen16DTS_PBED3
-    file: \*.thermo, \*.lammpstrj
+    file: '*.thermo, *.lammpstrj'
   - tag: md2
     pes_model: ml4
     md_code: LAMMPS
@@ -71,4 +71,4 @@ MDSims:
     md_temp: 350 K
     md_pres: 1 atm
     zip: MDSims_1000Atoms_1000ps_350K_NPT_Gen16DTS_PBED3
-    file: \*.thermo, \*.lammpstrj
+    file: '*.thermo, *.lammpstrj'
