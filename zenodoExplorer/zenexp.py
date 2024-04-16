@@ -4,7 +4,6 @@ import zipfile
 from tqdm import tqdm
 import yaml
 import glob
-from hashlib import md5
 from .zendata import zdb
 
 class ze:
@@ -55,13 +54,14 @@ class ze:
                 self.get_chunk(recID, fname)
                 
     def read_zdb(self):
+        self.zdb = zdb() #reset zdb object
         for recID in self.info:
             final_dest = self.get_chunk(recID, 'data.yml')
             with open(final_dest, 'r') as file:
                 zdb_dict = yaml.safe_load(file)
                 self.zdb.update(zdb_dict, recID)
 
-    def read_dat_files(self, tag):
+    def read_dat_files(self, tag, ext=None):
         dat = self.zdb.get_dat(tag)
         recID = int(dat.get_recID())
         fname = dat.zip+'.zip'
@@ -71,4 +71,6 @@ class ze:
         for p in pattern:
             for l in glob.glob(final_dest+'/'+p.strip()):
                 flist.append(l)
-        return flist
+        if ext:
+            flist = [l for l in flist if l.split('.')[-1] == ext[1:]]
+        return sorted(flist)
