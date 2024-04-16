@@ -61,8 +61,8 @@ class zdb:
             # color = []
         )
         
-        def node_update(dat, count, x, y):
-            node['label'].append(dat.tag)
+        def node_update(dat, name, count, x, y):
+            node['label'].append(name)
             node['x'].append(x)
             node['y'].append(y)
             uid2tag[count] = dat.tag
@@ -74,29 +74,35 @@ class zdb:
             link['source'].append(tag2uid[dat.source])
             link['target'].append(count)
             link['value'].append(1)
+            
+        def link_sort(link, key):
+            sort_idx = sorted(range(len(link[key])), key=link[key].__getitem__) #stackoverflow.com/questions/3382352
+            for k in link:
+                if len(link[k]) > 0:
+                    link[k] = [link[k][i] for i in sort_idx]
         
         count = 0
-        dx = 0.8/4
         dy = 0.8/len(self.AtomicConfigs)
 
         for i, dat in enumerate(self.AtomicConfigs):
-            count = node_update(dat, count, 0.1+dx*0, 0.1+dy*i)
+            count = node_update(dat, dat.name, count, 0.1, 0.01+dy*i)
         
         dy = 0.8/len(self.TrainData)
         for i, dat in enumerate(self.TrainData):
             link_update(dat, count)
-            count = node_update(dat, count, 0.1+dx*1, 0.1+dy*i)
+            count = node_update(dat, dat.ab_init_code+'/'+dat.ab_init_theo, count, 0.2, 0.1+dy*i)
         
         dy = 0.8/len(self.MLIPs)
         for i, dat in enumerate(self.MLIPs):
             link_update(dat, count)
-            count = node_update(dat, count, 0.1+dx*2, 0.1+dy*i)
+            count = node_update(dat, dat.ml_code+'/'+dat.ml_settings, count, 0.4, 0.1+dy*i)
         
         dy = 0.8/len(self.MDSims)
         for i, dat in enumerate(self.MDSims):
             link_update(dat, count)
-            count = node_update(dat, count, 0.1+dx*3, 0.1+dy*i)
-
+            count = node_update(dat, dat.md_code+'/'+dat.md_ensmb+'/'+dat.md_temp, count, 0.99, 0.1+dy*i)
+        
+        link_sort(link, key='source')
         fig = go.Figure(go.Sankey(node=node, link=link, arrangement='snap'))
         return fig
 
