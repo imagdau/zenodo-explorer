@@ -8,15 +8,24 @@ from .zendata import zdb
 
 class ze:
 
-    def __init__(self, ACCESS_TOKEN, recIDs):
+    def __init__(self, ACCESS_TOKEN, recIDs, base='https://zenodo.org/api/deposit/depositions/'):
         self.ACCESS_TOKEN = ACCESS_TOKEN
         self.recIDs = recIDs
         self.info = dict()
         self.zdb = zdb()
         for recID in self.recIDs:
             self.info[recID] = dict()
-            r = requests.get('https://zenodo.org/api/deposit/depositions/'+str(recID), params={'access_token': self.ACCESS_TOKEN})
-            self.info[recID].update({db['filename']:(db['checksum'], db['links']['download']) for db in r.json()['files']})
+            r = requests.get(base+str(recID), params={'access_token': self.ACCESS_TOKEN})
+            for db in r.json()['files']:
+                if 'filename' in db:
+                    fname = db['filename']
+                else:
+                    fname = 'glob.zip'
+                if 'download' in db['links']:
+                    link = db['links']['download']
+                else:
+                    link = db['links']['self']
+                self.info[recID].update({fname:(db['checksum'], link)})
             self.info[recID] = dict(sorted(self.info[recID].items()))
     
     def get_chunk(self, recID, fname):
