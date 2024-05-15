@@ -53,7 +53,7 @@ class ze:
             if fext == '.zip':
                 with zipfile.ZipFile(temp_dest, 'r') as zip_ref:
                     zip_ref.extractall(final_dest)
-                    os.remove(temp_dest)
+                os.remove(temp_dest)
         return final_dest
 
     def cache_all_data(self):
