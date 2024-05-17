@@ -11,7 +11,7 @@ class ze:
     def __init__(self, ACCESS_TOKEN, recIDs, base='https://zenodo.org/api/deposit/depositions/', cache='.cache/'):
         self.ACCESS_TOKEN = ACCESS_TOKEN
         self.recIDs = recIDs
-        self.cache = cache
+        self.cache = os.path.expanduser(cache)
         self.info = dict()
         self.zdb = zdb()
         for recID in self.recIDs:
