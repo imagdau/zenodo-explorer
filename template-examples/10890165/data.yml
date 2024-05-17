@@ -107,5 +107,5 @@ MDSims:
     md_len: 0.9 ns
     md_temp: 500 K
     md_pres: 1 atm
-    zip: MDSims_GAP36_LR_Ase
+    zip: MDSims_MACE44_SR_Ase
     file: 'NPT/npt0[0-5].thermo, NPT/npt0[0-5].xyz, NVT/nvt0[0-5].thermo, NVT/nvt0[0-5].xyz'
