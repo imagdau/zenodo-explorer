@@ -36,7 +36,7 @@ class zdb:
         self.MDSims = []
     
     def update(self, zdb_dict, recID):
-        for k in ['AtomicConfigs', 'TrainData', 'MLIPs', 'MDSims']:
+        for k in abr.values():
             if k in zdb_dict:
                 update_tags(zdb_dict[k], recID)
                 for data_dict in zdb_dict[k]:
@@ -61,6 +61,24 @@ class zdb:
             if dat.tag == tag:
                 return dat
 
+    def del_dat(self, tag):
+        key = abr[tag[:2]]
+        for dat in self.__dict__[key]:
+            if dat.tag == tag:
+                self.__dict__[key].remove(dat)
+                return
+        
+    def del_dat_tree(self, tag):
+        tag_lst = [tag]
+        while len(tag_lst)>0:
+            tag = tag_lst.pop()
+            #traverse zdb and add all dats with source==tag
+            for k in (self.__dict__.keys() & abr.values()): #keys from abr, existing in zdb
+                for t in self.__dict__[k]:
+                    if t.source==tag:
+                        tag_lst.append(t.tag)
+            self.del_dat(tag)
+            
     def plot(self):
         tag2uid = dict()
         uid2tag = dict()
