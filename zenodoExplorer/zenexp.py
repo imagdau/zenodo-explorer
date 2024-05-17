@@ -8,9 +8,10 @@ from .zendata import zdb
 
 class ze:
 
-    def __init__(self, ACCESS_TOKEN, recIDs, base='https://zenodo.org/api/deposit/depositions/'):
+    def __init__(self, ACCESS_TOKEN, recIDs, base='https://zenodo.org/api/deposit/depositions/', cache='.cache/'):
         self.ACCESS_TOKEN = ACCESS_TOKEN
         self.recIDs = recIDs
+        self.cache = cache
         self.info = dict()
         self.zdb = zdb()
         for recID in self.recIDs:
@@ -31,9 +32,9 @@ class ze:
     def get_chunk(self, recID, fname):
         new_checksum, url = self.info[recID][fname]
         fbase, fext = os.path.splitext(fname)
-        os.makedirs('.cache/'+str(recID), exist_ok=True)
-        temp_dest = '.cache/'+str(recID)+'/'+fname
-        final_dest = '.cache/'+str(recID)+'/'+fbase        
+        os.makedirs(self.cache+str(recID), exist_ok=True)
+        temp_dest = self.cache+str(recID)+'/'+fname
+        final_dest = self.cache+str(recID)+'/'+fbase        
         if fext == '.yml':
             final_dest = temp_dest
         download = False
