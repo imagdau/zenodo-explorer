@@ -9,7 +9,11 @@ setup(
     description='Thin package for accessing the "Exploratory testbed for MLIPs" Zenodo community',
     packages=find_packages(),
     install_requires=[
-        "tqdm"
+        "pandas",
+        "requests",
+        "yaml",
+        "tqdm",
+        "plotly"
     ]
 )
 
