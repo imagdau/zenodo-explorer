@@ -11,7 +11,7 @@ setup(
     install_requires=[
         "pandas",
         "requests",
-        "yaml",
+        "pyaml",
         "tqdm",
         "plotly"
     ]
