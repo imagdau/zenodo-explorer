@@ -61,6 +61,13 @@ MLIPs:
     fit_prop: energy, forces
     zip: MLIP_MACE_SD22NQQ_wB97X
     file: macemodel.model
+  - tag: ml5
+    tr_data: td2@10835267
+    ml_code: MACE
+    ml_settings: Layers 2, Rcut 6+6
+    fit_prop: energy, forces, virial
+    zip: MLIP_MACE_IBM23_PBE
+    file: macemodel.model
 
 MDSims:
   - tag: md1
@@ -122,4 +129,16 @@ MDSims:
     md_temp: 298, 298, 298, 313 K
     md_pres: 1 atm
     zip: MDSims_1000Atoms_1fs_MACE_SD22NQ_B97
+    file: 'npt_*.thermo, npt_*.xyz'
+  - tag: md6
+    pes_model: ml5
+    md_code: ASE
+    md_system: 0%, 33%, 67%, 100% EC:EMC
+    md_no_at: 1000
+    md_ensmb: NPT
+    md_step: 1.0 fs
+    md_len: 1.0 ns
+    md_temp: 298, 298, 298, 298 K
+    md_pres: 1 atm
+    zip: MDSims_1000Atoms_1fs_MACE_IBM23_PBE
     file: 'npt_*.thermo, npt_*.xyz'
