@@ -1,4 +1,5 @@
 import os
+import shutil
 import requests
 import zipfile
 from tqdm import tqdm
@@ -53,6 +54,8 @@ class ze:
                 f.write(file_response.content)
             if fext == '.zip':
                 with zipfile.ZipFile(temp_dest, 'r') as zip_ref:
+                    print(final_dest)
+                    shutil.rmtree(final_dest)
                     zip_ref.extractall(final_dest)
                 os.remove(temp_dest)
         return final_dest

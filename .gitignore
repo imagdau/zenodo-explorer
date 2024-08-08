@@ -6,3 +6,4 @@ prints
 docs
 zenodoExplorer.egg-info/
 zenodoExplorer/__pycache__/
+build/
