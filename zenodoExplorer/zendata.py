@@ -42,14 +42,15 @@ class zdb:
                 for data_dict in zdb_dict[k]:
                     self.__dict__[k].append(dat(data_dict))
 
-    def to_pd(self, field):
+    def to_pd(self, field, show_path=True):
         tab = []
         for t in self.__dict__[field]:
             tab.append(t.__dict__)
         df = pd.DataFrame(tab)
-        if field != 'AtomicConfigs':
-            df = df.drop('zip', axis=1)
-            df = df.drop('file', axis=1)
+        if show_path==False:
+            if field != 'AtomicConfigs':
+                df = df.drop('zip', axis=1)
+                df = df.drop('file', axis=1)
         df = df.drop('name', axis=1)
         df = df.drop('source', axis=1)
         df = df.set_index('tag')
